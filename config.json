@@ -1,4 +1,17 @@
 {
     "deadline": 1660546800,
-    "exam_title": "COMP2521 Final Exam"
+    "exam_title": "COMP2521 Final Exam",
+    "questions": {
+        "q1": "give cs2521 sample_exam_q1 q1.txt",
+        "q2": "give cs2521 sample_exam_q2 q2.txt",
+        "q3": "give cs2521 sample_exam_q3 q3.txt",
+        "q4": "give cs2521 sample_exam_q4 q4.txt",
+        "q5": "give cs2521 sample_exam_q5 q5.txt",
+        "q6": "give cs2521 sample_exam_q6 q6.txt",
+        "q7": "give cs2521 sample_exam_q7 q7.txt",
+        "q8": "give cs2521 sample_exam_q8 q8.txt",
+        "q9": "give cs2521 sample_exam_q9 zipList.c",
+        "q10": "give cs2521 sample_exam_q10 maxDiff.c",
+        "q11": "give cs2521 sample_exam_q11 nodesNotInCycle.c"
+    }
 }
