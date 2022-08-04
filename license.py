@@ -108,6 +108,8 @@ def confirm_license() -> None:
             f"[green]You can delete [blue]{get_persisted_license_location()}[/blue] \
 or run [blue]{sys.argv[0]} --revoke-license[/blue] to revoke.[/green]")
         return
+    console.clear()
+    print(f"ExamRun {VERSION}.")
     print_license()
     try:
         i = input("Please confirm the above license (Y/n): ")
@@ -121,12 +123,13 @@ or run [blue]{sys.argv[0]} --revoke-license[/blue] to revoke.[/green]")
         exit(1)
 
     if i.lower() == "y" or i == '':
+        console.clear()
+        print(f"ExamRun {VERSION}.")
         console.print('[green]License accepted.[/green]')
         persist_license()
         return
     console.print('[red]License not accepted.[/red]')
     raise LicenseError()
-    return
 
 
 class LicenseError(Exception):

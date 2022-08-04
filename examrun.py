@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 
-import os
-import typing as t
 import license
-from globals import console
 import argv
+import exam_scanner
 
 
 def main() -> None:
@@ -12,6 +10,7 @@ def main() -> None:
     argv.check_revoke_license()
     license.confirm_license()
     argv.process_argv()
+    exam_scanner.initialise()
 
 
 if __name__ == '__main__':
