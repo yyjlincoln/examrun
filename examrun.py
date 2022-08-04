@@ -10,7 +10,8 @@ def main() -> None:
     argv.check_revoke_license()
     license.confirm_license()
     argv.process_argv()
-    files = exam_scanner.scan()
+    config.read_config()
+    questions = exam_scanner.scan()
 
 
 if __name__ == '__main__':
