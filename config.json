@@ -1,6 +1,6 @@
 {
     "deadline": 1660546800,
-    "exam_title": "COMP2521 Final Exam",
+    "title": "COMP2521 Final Exam",
     "questions": {
         "q1": "give cs2521 sample_exam_q1 q1.txt",
         "q2": "give cs2521 sample_exam_q2 q2.txt",

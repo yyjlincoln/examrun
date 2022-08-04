@@ -28,7 +28,7 @@ def scan_files(root=os.getcwd(),
                path='',
                questions: t.Dict[int, ExamQuestion] = {},
                currentQuestionNumber=None) -> t.Dict[str, ExamQuestion]:
-    console.print(f'Scanning files in {os.path.join(root, path)}...')
+    # console.print(f'Scanning files in {os.path.join(root, path)}...')
     for file in os.listdir(os.path.join(root, path)):
         fileReal = os.path.join(root, path, file)
         if currentQuestionNumber is None:
@@ -68,7 +68,8 @@ def scan_files(root=os.getcwd(),
     return questions
 
 
-def scan():
+def scan(expected_files_for_question: t.Dict[str, t.List[str]] = {})\
+        -> t.Union[t.Dict[str, ExamQuestion], t.Dict[str, t.List[str]]]:
     progress = Progress()
     with progress:
         files = scan_files()
@@ -76,12 +77,33 @@ def scan():
     tb = Table(show_lines=True)
     tb.add_column('Question')
     tb.add_column('Type')
-    tb.add_column('Files Found')
+    tb.add_column('Files')
+    missing_files: t.Dict[str, t.List[str]] = {}
     for question in sorted(files.values(), key=lambda x: x['question_number']):
-        question_short_files = [f.split(os.getcwd()+"/")[-1]
-                                for f in question['files']]
+        question_files_diff = []
+        expected_list = []
+        if expected_files_for_question and f'q{question["question_number"]}'\
+                in expected_files_for_question:
+            expected_list = expected_files_for_question[
+                f"q{question['question_number']}"
+            ].copy()
+        for v in [f.split(os.getcwd()+"/")[-1]
+                  for f in question['files']]:
+            name_only = os.path.split(v)[-1]
+            if name_only in expected_list:
+                question_files_diff.append(
+                    f'[green]{v} (required for submission)[/green]')
+                expected_list.remove(name_only)
+            else:
+                question_files_diff.append(v)
+        for v in expected_list:
+            question_files_diff.append(f'[red]{v} (missing)[/red]')
+            if f"q{question['question_number']}" not in missing_files:
+                missing_files[f"q{question['question_number']}"] = []
+            missing_files[f"q{question['question_number']}"].append(v)
+
         tb.add_row(str(question['question_number']),
                    ExamQuestionTypeName[question['type']],
-                   '\n'.join(question_short_files))
+                   '\n'.join(question_files_diff))
     console.print(tb)
-    return files
+    return files, missing_files
